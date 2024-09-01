@@ -1,4 +1,4 @@
-![Typing SVG](https://readme-typing-svg.herokuapp.com?color=%FFFFFF&lines=👋Проекты обучения с Stepik.org)
+
 
 <div align="center">
 ‍💻 Мой профиль на Stepik.org ниже ‍💻 
