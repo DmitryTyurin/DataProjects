@@ -4,6 +4,7 @@
 #
 # Результат округлите до двух знаков после запятой при помощи функции round
 
+
 def convert(from_currency: str, to_currency: str, amount: [int | float]):
     global exchange_rates
 
