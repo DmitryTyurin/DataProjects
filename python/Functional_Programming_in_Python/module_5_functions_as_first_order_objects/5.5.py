@@ -34,11 +34,14 @@ def create_attrs(obj, attr_tuples):
     for attr_name, value in attr_tuples:
         setattr(obj, attr_name, value)
 
+
 # Ваша задача написать функцию count_strings, которая принимает произвольное количество аргументов. Функция должна среди всех переданных значений найти только строки, найти их количество и  вернуть в качестве результата.
 # Ваша задача написать только определение функции count_strings
 
+
 def count_strings(*args):
     return sum(isinstance(arg, str) for arg in args)
+
 
 # Ваша задача написать функцию find_keys, которая принимает произвольное количество именованных аргументов. Функция должна отобрать только те имена параметров, у которых значения являются списками или кортежами. Функция find_keys должна собрать все имена таких параметров в список, отсортировать их по алфавиту вне зависимости от регистра букв и вернуть в качестве результата.
 # Ниже представлены примеры:
@@ -47,5 +50,8 @@ def count_strings(*args):
 # find_keys(marks=[4, 5], name='ashle', surname='Brown', age=20, Also=(1, 2)) => ['Also', 'marks']
 # Ваша задача написать только определение функции find_keys
 
+
 def find_keys(**kwargs):
-    return sorted([key for key, value in kwargs.items() if isinstance(value, (list, tuple))])
+    return sorted(
+        [key for key, value in kwargs.items() if isinstance(value, (list, tuple))]
+    )
