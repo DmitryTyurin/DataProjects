@@ -158,3 +158,4 @@ def is_strings_equal(s1: str, s2: str):
 
     # Сравниваем количества символов в двух множествах
     return counts1 == counts2
+
