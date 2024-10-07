@@ -8,3 +8,4 @@ WITH RECURSIVE factorials AS (
 )
 SELECT * FROM factorials;
 
+
