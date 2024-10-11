@@ -1,0 +1,1 @@
+https://stepik.org/course/206995/syllabus?auth=login
