@@ -35,7 +35,7 @@ with top_5_publisher as
     from video_game_sales vgs
     group by Publisher
     order by sum_global_sales desc
-limit 5
+    limit 5
 )
 
 select floor(sum(Global_Sales)) as sum_global_sales_without_top_5
