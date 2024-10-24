@@ -8,7 +8,7 @@ replaceAll(transaction_time, 'PDT', '') as _transaction_time,
 concat(_transaction_date, ' ', _transaction_time) as _transaction_datetime,
 parseDateTimeBestEffort(_transaction_datetime) as transaction_datetime
 select toDate(transaction_datetime) as date,
-	toDateTime(transaction_datetime) as dt,
+    toDateTime(transaction_datetime) as dt,
 	transaction_id
 from earnings
 order by dt desc
