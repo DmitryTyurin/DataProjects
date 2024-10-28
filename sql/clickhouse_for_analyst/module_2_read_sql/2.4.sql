@@ -86,5 +86,54 @@ from asof_join_data
 where platform in ('PS3', 'PS2', 'X360', 'Wii');
 
 
+--В данном задании нам нужно будет вычислить вероятность выжить на Титанике для различных групп пассажиров и выяснить сколько людей из тех у кого были самые маленькие шансы на спасение в итоге выжил.
+--Задание большое! Шаги которые нужно выполнить для этого:
+--Для начала нужно выделить столбцы по которым будем считать вероятность выживет пассажир или нет: Pclass, Sex, Age
+--Для поля Age нам нужно преобразовать тип во Float после чего заполнить пустые значения, сделать это нужно следующим способом: заполнить средним значением avg (без учета пустых значений).
+--На выходе вы должны получить таблицу с такими полями: Pclass, Sex, Age, Survived
+--Для поля Age воспользуйтесь функцией roundAge() для округления до различных возрастных групп
+--После чего посчитайте вероятность выжить по полям Pclass, Sex, Age.  Вероятность выжить считается по формуле
+--Сделайте дополнительный столбец pss в котором те у кого вероятность выжить > 0.1 называются lucky остальные именуются other (Prob > 0.1 as pss)
+--Далее объедините полученные данные с таблицей Титаник чтобы выяснить какие шансы выжить есть у каждого пассажира в отдельности.
+--После чего посчитайте количество other которые выжили!
+--Полученное значение будет ответом
+
+with
+avg_age as (select avg(toFloat64OrNull(Age)) as average_age from titanic),
+roundAge(ifNull(toFloat64OrNull(Age), (select average_age from avg_age))) as age,
+countIf(Survived = 1) / count() as prob,
+pss_data as (
+    select  Pclass as pclass,
+        Sex as sex,
+        age,
+        prob,
+        if(prob > 0.1, 'lucky', 'other') as pss
+    from titanic
+    group by pclass, sex, age
+),
+raw_data as (
+    select Name as name,
+        Pclass as pclass,
+        Sex as sex,
+        age,
+        Survived as survived
+    from titanic
+)
+select
+	rd.name,
+	rd.pclass,
+	rd.sex,
+	rd.age,
+	pd.pss,
+	rd.survived
+from raw_data rd
+	left join pss_data pd on
+	    rd.pclass = pd.pclass
+	    and rd.sex = pd.sex
+		and rd.age = pd.age
+where rd.survived = 1 and pd.pss = 'other';
+
+
+
 
 
