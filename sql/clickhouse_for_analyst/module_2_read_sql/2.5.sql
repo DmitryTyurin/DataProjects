@@ -14,3 +14,28 @@ order by length_cabin desc
 limit 1;
 
 
+--Ваша задача в этом задании заполнить данные которые пропущены, у нас есть uid (пользователь) и step_ (имя шага, события).
+--Шаги помечены номерами, они соответствуют последовательности действий, то есть идут друг за другом. Но часть из них пропущена, нужно их проставить.
+--Нам известно что у нас 9 пользователей, и такая последовательность шагов
+--step a (1 шаг)
+--step b
+--step c
+--step d
+--step e
+--step f
+--step g
+--step w (последний шаг)
+--У каждого пользователя максимальный шаг свой! В задании не нужно использовать CROSS JOIN
+
+with
+indexOf(['step a', 'step b', 'step c', 'step d', 'step e', 'step f', 'step g', 'step w'], step) as weighted_step,
+max_step as (
+	select
+	    UID as uid,
+	    max(weighted_step) as step_
+	from events
+	group by UID
+	order by UID
+)
+select sum(uid * step_) as sum_step
+from max_step;
