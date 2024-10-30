@@ -39,3 +39,17 @@ max_step as (
 )
 select sum(uid * step_) as sum_step
 from max_step;
+
+
+--Для таблицы Титаник, посчитайте шансы выжить для каждого пользователя исходя из его пола и класса
+--Формат ответа:
+--В качестве ответа впишите имя пассажира у которого шанс выжить больше всего, отсортируйте по имени если таких пассажиров несколько [A -> Z].
+--Нельзя использовать JOIN Только оконные функции.
+
+select Name,
+	avg(Survived) over (partition by Sex, Pclass) as surv
+from titanic
+order by surv desc, Name
+limit 1;
+
+
