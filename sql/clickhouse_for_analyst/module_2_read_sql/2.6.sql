@@ -39,3 +39,4 @@ select floor(sum(value)) as sum_value,
 	floor(avg(toInt64(key))) as avg_key
 from parse_data
 
+
