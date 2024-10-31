@@ -68,9 +68,44 @@ limit 1;
 --Каждая новая сессия нового пользователя должна начинаться с 1
 --В качестве ответа указать сумму по столбцу с размеченными сессиями.
 --Пример корректного вывода (это пример вывода, не ориентируйтесь на сами данные):
+
 +------+----------------------------+-----+----------+
 | uid |           event_time            | ind | sessions |
 +------+----------------------------+-----+----------+
 |    1 | 2020-10-12 10:05:00.000000 |   1 |        1 |
 |    1 | 2020-10-12 10:10:00.000000 |   0 |        1 |
 |    1 | 2020-10-12 20:05:00.000000 |   1 |        2 |
+
+with
+	time_diff as (
+	    select
+	        id as uid,
+	        date as event_time,
+	        lagInFrame(event_time) over (partition by uid order by event_time) as prev_event_time
+	    from login_step
+	),
+	ind_data as (
+	    select
+	        uid,
+	        event_time,
+	        if(prev_event_time is null or abs(dateDiff('minute', prev_event_time, event_time) > 5), 1, 0) as ind
+	    from time_diff
+	),
+	session_data as (
+	    select
+	        uid,
+	        event_time,
+	        ind,
+	        sum(ind) over (partition by uid order by event_time) as sessions
+	    from ind_data
+	),
+	sum_data as (
+		select
+		    uid,
+		    event_time,
+		    ind,
+		    sessions
+		from session_data
+	)
+select sum(sessions) as sum_sessions
+from sum_data;
