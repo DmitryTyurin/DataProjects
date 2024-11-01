@@ -42,3 +42,17 @@ ccu_data as (
 )
 select max(CCU) as pcu
 from ccu_data
+
+
+--Сколько новых пользователей пришедших в неделю начавшуюся 2023-02-13 совершили хотя-бы один платеж?
+
+with
+first_login as (
+	select uid
+	from login
+	group by uid
+	having toStartOfWeek(min(event_time), 1) == '2023-02-13'
+)
+select uniqIf(uid, is_test == 0) as first_finance
+from finance
+where uid in (select uid from first_login)
