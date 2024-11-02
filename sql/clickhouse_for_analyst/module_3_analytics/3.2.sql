@@ -14,3 +14,10 @@ where payment = 1
 	and is_test = 0
 
 
+-- В какую из недель была максимальная выручка в таблице finance Не забудьте отфильтровать по полю is_test
+
+select toStartOfWeek(event_time, 1) as week,
+	sumIf(revenue_usd, is_test = 0) as sum_revenue_usd
+from finance f
+group by week
+order by sum_revenue_usd desc
