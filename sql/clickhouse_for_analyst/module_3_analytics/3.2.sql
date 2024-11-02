@@ -21,3 +21,21 @@ select toStartOfWeek(event_time, 1) as week,
 from finance f
 group by week
 order by sum_revenue_usd desc
+
+
+-- Посчитать ARPMAU за март по таблицам login и finance
+
+with
+toMonth(event_time) as month,
+(
+	select uniqExact(uid) AS mau_users
+	from login
+	where month = 3
+) as mau,
+(
+    select sum(revenue_usd) AS total_revenue
+    from finance
+    where month = 3
+    	and is_test = 0
+) as revenue
+select round(revenue / mau, 4) as ARPMAU
