@@ -39,3 +39,21 @@ toMonth(event_time) as month,
     	and is_test = 0
 ) as revenue
 select round(revenue / mau, 4) as ARPMAU
+
+
+-- Посчитать процент платящей аудитории в марте по таблицам login и finance
+
+with
+toMonth(event_time) as month,
+(
+	select uniqExact(uid) AS mau_users
+	from login
+	where month = 3
+) as mau,
+(
+    select uniqExact(uid) AS playing_users
+    from finance
+    where month = 3
+    	and is_test = 0
+) as playing_share
+select round(playing_share / mau, 4) as Paying_Share
