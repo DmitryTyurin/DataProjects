@@ -46,3 +46,26 @@ from login l
 	join reg_data rd on l.uid = rd.uid
 group by rd.user_reg_date
 having user_reg_date = '2023-01-01';
+
+
+--Посчитайте Накопительный ARPPU 15 дня жизни для тех кто зарегистрировался 2023-02-27.
+--Уточнение, Накопительный AR PPU отличается от Накопительный AR PU тем что мы считаем только заплативших пользователей, не забудьте уточнить это в вашем запросе!
+--Тестовые платежи убираем.
+
+with
+reg_data as (
+    select min(toDate(event_time)) as user_reg_date,
+    	uid
+    from login
+    group by uid
+)
+select user_reg_date,
+  	uniq(uid) as all_users,
+	sumIf(revenue_usd, toDate(event_time) <= 15 + user_reg_date) as rev_day_15,
+	round(rev_day_15 / all_users, 4) as CARPU15
+from finance f
+	left join reg_data rd using(uid)
+where 1
+	and is_test = 0
+	and user_reg_date = '2023-02-27'
+group by user_reg_date
