@@ -7,7 +7,7 @@
 -- drop table if exists sandbox.sales_dtyurin
 create table if not exists sandbox.sales_dtyurin
 (
-    sale_date 				DateTime			    comment 'дата продажи',
+    sale_date 				DateTime			comment 'дата продажи',
     product_id 				Int64 				comment 'идентификатор продукта',
     product_category 		String 				comment 'категория продукта',
     sale_amount 			Int64	default 0 	comment 'сумма продажи',
