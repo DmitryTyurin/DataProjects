@@ -7,7 +7,7 @@
 -- drop table if exists sandbox.sales_dtyurin
 create table if not exists sandbox.sales_dtyurin
 (
-    sale_date 				String			    comment 'дата продажи',
+    sale_date 				DateTime			    comment 'дата продажи',
     product_id 				Int64 				comment 'идентификатор продукта',
     product_category 		String 				comment 'категория продукта',
     sale_amount 			Int64	default 0 	comment 'сумма продажи',
@@ -18,3 +18,20 @@ create table if not exists sandbox.sales_dtyurin
 engine = MergeTree
 partition by toYYYYMM(sale_date)
 order by (sale_date, product_id, customer_id)
+
+
+--Создайте таблицу аналогичную предыдущей с движком ReplacingMergeTree и ключём сортировки product_category
+-- drop table if exists sandbox.sales_5_1_2
+create table if not exists sandbox.sales_5_1_2
+(
+    sale_date 				DateTime			comment 'дата продажи',
+    product_id 				Int64 				comment 'идентификатор продукта',
+    product_category 		String 				comment 'категория продукта',
+    sale_amount 			Int64	default 0 	comment 'сумма продажи',
+    sale_quantity 			Int64 				comment 'количество продаж',
+    customer_id 			Int64	 			comment	'идентификатор покупателя',
+    store_id				Int64 				comment 'идентификатор магазина'
+)
+engine = ReplacingMergeTree
+partition by toYYYYMM(sale_date)
+order by (product_category)
