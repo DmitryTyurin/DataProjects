@@ -35,3 +35,4 @@ create table if not exists sandbox.sales_5_1_2
 engine = ReplacingMergeTree
 partition by toYYYYMM(sale_date)
 order by (product_category)
+
