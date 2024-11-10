@@ -27,3 +27,38 @@ to sandbox.log_to_insert
 as
 select *
 from sandbox.log
+
+
+--В данном задании вам необходимо будет скачать данные из S3.
+--В интернете есть доступный для вас инстанс MiniO (S3). Куда вы можете сделать запрос.
+
+--drop table if exists sandbox.s3_currency
+create table if not exists sandbox.s3_currency
+(
+    currency 		String,
+    value 			Int64,
+    date 			String
+)
+engine = S3('http://minio:9000/clickhouse/*',
+ 			'...', --логин
+ 			'...', --пароль
+ 			'CSVWithNames'
+ 			)
+
+
+--В данном задании вам необходимо будет скачать данные из S3.
+--В интернете есть доступный для вас инстанс MiniO (S3). Куда вы можете сделать запрос.
+
+
+--drop table if exists sandbox.s3_currency_pq
+create table if not exists sandbox.s3_currency_pq
+(
+    currency 		String,
+    value 			Int64,
+    date 			String
+)
+engine = S3('http://minio:9000/clickhousepq/*',
+ 			'...', --логин
+ 			'...', --пароль
+ 			'Parquet'
+ 			)
