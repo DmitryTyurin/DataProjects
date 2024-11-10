@@ -61,3 +61,18 @@ engine = S3('http://minio:9000/clickhousepq/*',
  			'...', --пароль
  			'Parquet'
  			)
+
+
+--Предлагаю в этом задании вам самостоятельно изучить движок для чтения данных по URL.
+--Вам необходимо выгрузить таблицу по этому адресу https://raw.githubusercontent.com/datanlnja/clickhouse_course/main/5.2/5
+
+--drop table if exists sandbox.s3_currency_url_2
+create table if not exists sandbox.s3_currency_url_2
+(
+    currency 		String,
+    value 			Int64,
+    date 			String
+)
+engine = URL('https://raw.githubusercontent.com/datanlnja/clickhouse_course/main/5.2/5',
+			 'CSVWithNames'
+			)
