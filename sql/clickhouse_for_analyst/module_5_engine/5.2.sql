@@ -49,7 +49,6 @@ engine = S3('http://minio:9000/clickhouse/*',
 --В данном задании вам необходимо будет скачать данные из S3.
 --В интернете есть доступный для вас инстанс MiniO (S3). Куда вы можете сделать запрос.
 
-
 --drop table if exists sandbox.s3_currency_pq
 create table if not exists sandbox.s3_currency_pq
 (
