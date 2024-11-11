@@ -14,7 +14,6 @@ engine = MergeTree
 partition by toYYYYMM(event_time)
 order by (user_id, event_time)
 
-
 --drop table if exists sandbox.log_to_insert__mv
 create materialized view if not exists sandbox.log_to_insert__mv
 to sandbox.log_to_insert
@@ -76,3 +75,9 @@ create table if not exists sandbox.s3_currency_url_2
 engine = URL('https://raw.githubusercontent.com/datanlnja/clickhouse_course/main/5.2/5',
 			 'CSVWithNames'
 			)
+
+
+--Напишите запрос которые объединит данные с помощью joinGet и выведет размер популяции для каждой строки, в качестве ответа вставьте сумму по получившемуся столбцу.
+
+select sum(joinGet('sandbox.geo', 'population', country_code)) as population
+from sandbox.log300
