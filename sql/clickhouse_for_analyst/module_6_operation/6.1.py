@@ -13,7 +13,7 @@ FILE_PATH = "csvjson.csv"
 
 def create_table(user: str, password: str | int, url: str, table: str) -> None:
     query = f"""
-        create table if not exists {table} 
+        create table if not exists {table}
         (
             id                  UInt32                  comment 'id пользователя',
             name                String                  comment 'имя пользователя',
@@ -76,6 +76,92 @@ def main():
     create_table(USER, PASSWORD, URL, TABLE)
     insert_data(USER, PASSWORD, URL, TABLE, FILE_PATH)
     select_data(USER, PASSWORD, URL, TABLE)
+
+
+if __name__ == "__main__":
+    main()
+
+
+# В данном уроке вам предстоит загрузить в Clickhouse CSV файл с помощью clickhouse-driver!
+# При решении вы столкнетесь с проблемой конвертации типов данных. Это можно обойти использовав такой подход
+# select * from url( ... )
+# Тем не менее есть вариант решения задачи только через Python код. Будет принято любое решение.
+# Формат ответа:
+# В качестве ответа прислать sum(value) округлить до целых в любую сторону
+
+from clickhouse_driver import Client
+
+USER = ""
+PASSWORD = ""
+HOST = "158.160.116.58"
+PORT = 9000
+DATABASE = "sandbox"
+TABLE = "sandbox.user_active_url_1"
+
+FILE_PATH = "csvjson.csv"
+
+client = Client(
+    host=HOST,
+    port=PORT,
+    user=USER,
+    password=PASSWORD,
+    database=DATABASE,
+    settings={"use_numpy": True},
+)
+
+
+def create_table(client: Client, table: str) -> None:
+    query = f"""
+        create table if not exists {table}
+        (
+            id                  UInt32                  comment 'id пользователя',
+            name                String                  comment 'имя пользователя',
+            value               Float64                 comment 'значение',
+            is_active           Bool                    comment 'активный пользователь',
+            key                 UInt32                  comment 'ключ',
+            list                Array(Int32)            comment 'список'
+        )
+        engine = MergeTree()
+        order by (tuple())
+        
+        """
+    client.execute(query)
+    print(f"Таблица {table} успешно создана")
+
+
+def insert_data(client: Client, table: str, file_path: str) -> None:
+    import clickhouse_driver
+    import pandas as pd
+
+    data = pd.read_csv(file_path)
+
+    for column in data.columns:
+        print(f"Тип столбца {column}: {data[column].dtype}")
+
+    query = f"""
+        insert into {table} 
+        values 
+        """
+    try:
+        client.insert_dataframe(query, data)
+    except clickhouse_driver.errors.TypeMismatchError as e:
+        print(e)
+
+
+def select_data(client: Client, table: str) -> None:
+    query = f"""
+        select round(sum(value)) as sum_value
+        from {table}
+        """
+    result = client.execute(query)
+    print(result)
+
+
+def main():
+    with client:
+        create_table(client, TABLE)
+        insert_data(client, TABLE, FILE_PATH)
+        select_data(client, TABLE)
 
 
 if __name__ == "__main__":
