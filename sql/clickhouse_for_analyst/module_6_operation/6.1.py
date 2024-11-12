@@ -5,7 +5,7 @@ import requests
 
 USER = ""
 PASSWORD = ""
-URL = "http://158.160.116.58:8123"
+URL = ""
 TABLE = "sandbox.user_active_http_2"
 
 FILE_PATH = "csvjson.csv"
@@ -93,8 +93,8 @@ from clickhouse_driver import Client
 
 USER = ""
 PASSWORD = ""
-HOST = "158.160.116.58"
-PORT = 9000
+HOST = ""
+PORT = ""
 DATABASE = "sandbox"
 TABLE = "sandbox.user_active_url_1"
 
