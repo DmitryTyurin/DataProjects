@@ -52,3 +52,20 @@ from all_model_data amd
 where maker = 'Multi';
 
 
+--Найдите производителя, выпускающего легковые автомобили, но не грузовики.
+
+with
+truck_maker as
+(
+	select maker
+	from vehicle
+	where type = 'Truck'
+)
+select distinct maker
+from vehicle
+where type = 'Car'
+	and maker not in
+		(
+			select maker
+			from truck_maker
+		);
