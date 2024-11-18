@@ -21,3 +21,34 @@ from truck t
 select *
 from truck t
 where load_capacity > 1;
+
+
+--Для каждого производителя, выпускающего мотоциклы с весом не менее 100 кг, найти мощности двигателей таких мотоциклов.
+--Вывод: производитель, мощность двигателя.
+
+select v.maker as maker,
+	m.engine_power as engine_power
+from motorcycle m
+	left join vehicle v using(model)
+where m.weight >= 100;
+
+
+--Найдите модели и цены всех имеющихся в продаже ТС (любого типа) производителя Multi.
+with
+all_model_data as
+(
+	select model, price
+	from car
+	union all
+	select model, price
+	from motorcycle
+	union all
+	select model, price
+	from truck
+)
+select model, price
+from all_model_data amd
+	left join vehicle v using(model)
+where maker = 'Multi';
+
+
