@@ -69,3 +69,30 @@ where type = 'Car'
 			select maker
 			from truck_maker
 		);
+
+
+--Найдите производителей легковых авто с мощностью двигателя не менее 700 лошадиных сил. Вывести: maker.
+
+select v.maker as maker
+from car c
+	left join vehicle v using(model)
+where c.engine_power > 700;
+
+
+--Найдите мощности двигателей, совпадающих у двух и более мотоциклов. Вывести: engine_power.
+
+select engine_power
+from motorcycle
+group by engine_power
+having count(*) >= 2;
+
+
+--Найдите производителей самых дешевых электрических (Electric) мотоциклов. Вывести: maker, price.
+
+select v.maker as maker,
+	m.price as price
+from motorcycle m
+	left join vehicle v using(model)
+where m.fuel_type = 'Electric'
+order by price asc
+limit 1;
