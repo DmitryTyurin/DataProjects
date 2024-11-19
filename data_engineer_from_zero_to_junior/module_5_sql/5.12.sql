@@ -96,3 +96,38 @@ from motorcycle m
 where m.fuel_type = 'Electric'
 order by price asc
 limit 1;
+
+
+--Найдите производителей, которые производили бы как легковые автомобили с мощностью двигателя не менее 300 лошадиных сил,
+--так и грузовики с мощностью двигателя не менее 300 лошадиных сил.
+--Вывести: maker.
+
+with
+car_model as
+(
+	select v.maker as maker
+	from car c
+		left join vehicle v using(model)
+	where c.engine_power >= 300
+),
+truck_model as
+(
+	select v.maker as maker
+	from truck t
+		left join vehicle v using(model)
+	where t.engine_power >= 300
+),
+maker_data as
+(
+	select *
+	from car_model
+	union all
+	select *
+	from truck_model
+)
+select maker
+from maker_data
+group by maker
+having count(*) > 1;
+
+
