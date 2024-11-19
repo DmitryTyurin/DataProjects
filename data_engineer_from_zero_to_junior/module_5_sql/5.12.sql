@@ -131,3 +131,43 @@ group by maker
 having count(*) > 1;
 
 
+--Найдите производителей мотоциклов, которые производят легковые автомобили,
+--с наименьшей мощностью двигателя и с самым большим количеством мест среди всех легковых автомобилей.
+--Вывести: maker.
+
+with
+min_max_car as
+(
+	select v.maker as maker,
+		min(c.engine_power) as min_engine_power,
+		max(c.seats) 		as max_seats
+	from car c
+		left join vehicle v using(model)
+	group by v.maker
+	order by max_seats desc, min_engine_power asc
+	limit 1
+)
+select maker
+from vehicle
+where maker in (select maker from min_max_car)
+	and type in ('Motorcycle')
+;
+
+
+--Найдите среднюю цену легковых автомобилей и грузовиков, выпущенных производителем Duo2TC.
+--Вывести: одна общая средняя цена (average_price).
+
+with
+truck_car_data as
+(
+	select model, price
+	from car
+	union all
+	select model, price
+	from truck
+)
+select avg(tcd.price) as average_price
+from truck_car_data tcd
+	left join vehicle v using(model)
+where v.maker = 'Duo2TC'
+;
