@@ -8,6 +8,7 @@ cd /home
 mkdir Favorite_movies
 cd Favorite_movies/
 cat > my_top_10_movies.txt
+...
 more my_top_10_movies.txt
 
 
@@ -20,6 +21,7 @@ more my_top_10_movies.txt
 mkdir Favorite_actors
 cd Favorite_actors/
 cat > my_top_10_actors.txt
+...
 more my_top_10_actors.txt
 
 
