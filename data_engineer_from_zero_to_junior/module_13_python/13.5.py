@@ -3,13 +3,13 @@
 
 text = input()
 
-if len(text) != 10 or text[0] != 'D':
-    print('Некорректный ID')
+if len(text) != 10 or text[0] != "D":
+    print("Некорректный ID")
 
 
 # Напишите программу, которая принимает значение метрики и проверяет, находится ли оно в допустимом диапазоне от 10 до 100 включительно.
 
-print('Метрика в допустимом диапазоне' if 10 <= int(input()) <= 100 else '')
+print("Метрика в допустимом диапазоне" if 10 <= int(input()) <= 100 else "")
 
 
 # Напишите программу, которая принимает две метрики: total_records (общее количество записей) и processed_records (количество обработанных записей).
@@ -21,9 +21,7 @@ print('Метрика в допустимом диапазоне' if 10 <= int(i
 total_records = int(input())
 processed_records = int(input())
 
-if ((total_records > 0
-        and processed_records > 0)
-        and total_records >= processed_records):
+if (total_records > 0 and processed_records > 0) and total_records >= processed_records:
     print("Данные корректны")
 else:
     print("Консистентность данных нарушена")
@@ -118,16 +116,16 @@ password = input()
 if len(password) < 8:
     print("Длина пароля должна быть не менее 8 символов")
 
-elif not re.search(r'[A-Z]', password):
+elif not re.search(r"[A-Z]", password):
     print("Пароль должен содержать хотя бы одну заглавную букву")
 
-elif not re.search(r'\d', password):
+elif not re.search(r"\d", password):
     print("Пароль должен содержать хотя бы одну цифру")
 
-elif not re.search(r'[!@#$%&*]', password):
-    print ("Пароль должен содержать хотя бы один специальный символ (!, @, #, $, %, &, *)")
+elif not re.search(r"[!@#$%&*]", password):
+    print(
+        "Пароль должен содержать хотя бы один специальный символ (!, @, #, $, %, &, *)"
+    )
 
 else:
     print("Пароль валиден")
-
-
