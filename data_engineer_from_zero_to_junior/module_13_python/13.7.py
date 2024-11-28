@@ -62,4 +62,3 @@ if len(common_chars) == 0:
     print("Общих букв нет")
 else:
     print(f"Общие буквы: {', '.join(common_chars)}")
-
