@@ -38,3 +38,5 @@ for i in $(seq 0 2 $a); do
     sum=$((sum + i))
 done
 echo $sum
+
+
