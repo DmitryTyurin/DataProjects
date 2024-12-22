@@ -18,10 +18,12 @@ options_chrome.add_argument("--headless=new")
 
 
 def get_result(url: str):
-    with (webdriver.Chrome() as driver):
+    with webdriver.Chrome() as driver:
         driver.get(url)
 
-        scroll_element = driver.find_element(By.ID, "scroll-container").find_element(By.TAG_NAME, "div")
+        scroll_element = driver.find_element(By.ID, "scroll-container").find_element(
+            By.TAG_NAME, "div"
+        )
 
         while True:
             result = 0
