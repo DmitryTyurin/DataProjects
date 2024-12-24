@@ -6,7 +6,6 @@
 # Завершение задачи: Вставьте полученный секретный код в специальное поле для ответа на степик.
 
 
-
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
@@ -34,9 +33,9 @@ def get_result(url: str):
             driver.find_element(By.ID, "input").send_keys(alert_text)
             driver.find_element(By.ID, "check").click()
 
-            result = driver.find_element(By.ID, 'result').text
+            result = driver.find_element(By.ID, "result").text
 
-            if result == 'Неверный пин-код':
+            if result == "Неверный пин-код":
                 pass
             else:
                 print(result)
