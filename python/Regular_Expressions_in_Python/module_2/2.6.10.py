@@ -6,6 +6,9 @@ regex = r"со[нкм]"
 
 
 class RegularExpression:
+    """
+    Класс для работы с регулярными выражениями
+    """
     def __init__(self, regular: str, text: str):
         self.regular = regular
         self.text = text
