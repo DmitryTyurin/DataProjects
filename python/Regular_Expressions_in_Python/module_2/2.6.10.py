@@ -9,13 +9,14 @@ class RegularExpression:
     """
     Класс для работы с регулярными выражениями
     """
+
     def __init__(self, regular: str, text: str):
         self.regular = regular
         self.text = text
 
     def get_result(self) -> str:
         result = re.findall(self.regular, self.text)
-        result = ' '.join(result)
+        result = " ".join(result)
 
         return result
 
