@@ -13,8 +13,11 @@ class RegularExpression:
         self.regular = regular
         self.text = text
 
-    def findall(self) -> list:
-        return re.findall(self.regular, self.text)
+    def findall(self) -> str:
+        result = re.findall(self.regular, self.text)
+        result = ' '.join(result)
+
+        return result
 
 
 r = RegularExpression(regex, input())
