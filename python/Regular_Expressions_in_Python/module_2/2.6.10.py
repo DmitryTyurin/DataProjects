@@ -13,7 +13,7 @@ class RegularExpression:
         self.regular = regular
         self.text = text
 
-    def findall(self) -> str:
+    def get_result(self) -> str:
         result = re.findall(self.regular, self.text)
         result = ' '.join(result)
 
@@ -21,4 +21,4 @@ class RegularExpression:
 
 
 r = RegularExpression(regex, input())
-print(r.findall())
+print(r.get_result())
