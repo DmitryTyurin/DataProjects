@@ -7,7 +7,7 @@
 
 import re
 
-regex = r"[\"].*?[\"]"
+regex = r"[\"].+?[\"]"
 
 
 class RegularExpression:
