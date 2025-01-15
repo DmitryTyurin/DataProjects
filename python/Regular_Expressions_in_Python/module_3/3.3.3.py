@@ -7,7 +7,8 @@ import re
 import sys
 
 text = list(map(str.strip, sys.stdin.readlines()))
-pattern = re.compile(r'код', re.IGNORECASE)
+pattern = re.compile(r"код", re.IGNORECASE)
+
 
 class RegularExpression:
     """
@@ -26,7 +27,6 @@ class RegularExpression:
                 break
         else:
             print("код не найден")
-
 
 
 r = RegularExpression(text, pattern)
