@@ -27,6 +27,5 @@ class RegularExpression:
             return False
 
 
-
 r = RegularExpression(pattern, string)
 print(r.get_result())
