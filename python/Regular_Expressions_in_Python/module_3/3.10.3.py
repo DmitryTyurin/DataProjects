@@ -6,6 +6,7 @@ import sys
 pattern = r"\d"
 string = input()
 
+
 class RegularExpression:
     """
     Класс для работы с регулярными выражениями
