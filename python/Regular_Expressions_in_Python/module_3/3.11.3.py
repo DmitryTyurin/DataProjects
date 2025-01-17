@@ -3,6 +3,7 @@ import sys
 
 string = rf"{input()}"
 
+
 class RegularExpression:
     """
     Класс для работы с регулярными выражениями
