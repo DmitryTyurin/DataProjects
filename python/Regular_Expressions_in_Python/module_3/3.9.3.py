@@ -20,7 +20,7 @@ class RegularExpression:
         self.pattern = pattern
 
     def get_result(self):
-        result = re.sub(self.pattern, "",self.string, flags=re.IGNORECASE)
+        result = re.sub(self.pattern, "", self.string, flags=re.IGNORECASE)
 
         return result
 
