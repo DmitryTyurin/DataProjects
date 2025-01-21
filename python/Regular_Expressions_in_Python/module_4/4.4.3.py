@@ -5,7 +5,7 @@
 
 import re
 
-pattern = r'(\*{2}([\w\s]+?)\*{2})|(\*([\w\s]+?)\*)'
+pattern = r"(\*{2}([\w\s]+?)\*{2})|(\*([\w\s]+?)\*)"
 string = input()
 
 
@@ -22,9 +22,9 @@ class RegularExpression:
 
         def replacement(match):
             if match.group(1):
-                return '<strong>' + match.group(1) + '</strong>'
+                return "<strong>" + match.group(1) + "</strong>"
             else:
-                return '<em>' + match.group(3) + '</em>'
+                return "<em>" + match.group(3) + "</em>"
 
         result = re.sub(self.pattern, replacement, self.string)
 
