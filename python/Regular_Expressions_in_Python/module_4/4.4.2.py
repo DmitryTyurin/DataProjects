@@ -5,7 +5,7 @@
 
 import re
 
-pattern = r'\b(\w+)\s+\1\b'
+pattern = r"\b(\w+)\s+\1\b"
 string = input()
 
 
@@ -19,7 +19,7 @@ class RegularExpression:
         self.pattern = pattern
 
     def get_result(self):
-        result = re.sub(self.pattern, r'\1', self.string)
+        result = re.sub(self.pattern, r"\1", self.string)
 
         return result
 
