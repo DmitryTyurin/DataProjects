@@ -16,7 +16,7 @@ class RegularExpression:
         self.pattern = pattern
 
     def get_result(self):
-        result = re.sub(self.pattern, lambda x: str(int(x.group())**2), self.string)
+        result = re.sub(self.pattern, lambda x: str(int(x.group()) ** 2), self.string)
 
         return result
 
