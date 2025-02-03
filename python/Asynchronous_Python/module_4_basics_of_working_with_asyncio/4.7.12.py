@@ -20,7 +20,7 @@ async def cast_spell(student: str, spell: str, cast_time: int) -> None:
 
     if cast_time >= max_cast_time:
         print(
-            f"Ученик {student} не справился с заклинанием {spell}, и учитель накладывает щит. {student} успешно завершает заклинание с помощью shield."
+            f"Ученик {student} не справился с заклинанием {spell}, и учитель применил щит. {student} успешно завершает заклинание с помощью shield."
         )
     else:
         print(f"{student} успешно кастует {spell} за {cast_time} сек.")
