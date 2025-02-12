@@ -82,16 +82,14 @@ async def board_passenger(passenger: dict) -> None:
 
 
 async def main(passengers_list: list) -> None:
-    tasks = [
-        asyncio.create_task(board_passenger(passenger)) for passenger in passengers_list
-    ]
-
-    gather = asyncio.gather(*tasks)
-
     try:
-        await asyncio.wait_for(gather, timeout=5)
-    except asyncio.TimeoutError:
-        pass
+        async with asyncio.TaskGroup() as tg:
+            [
+                tg.create_task(asyncio.wait_for(board_passenger(passenger), timeout=5))
+                for passenger in passengers_list
+            ]
+    except* Exception as e:
+        [print(error) for error in e.exceptions]
 
 
 asyncio.run(main(passengers))
