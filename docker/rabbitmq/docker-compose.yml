@@ -1,0 +1,21 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3.12-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"  # Порт для AMQP (основной протокол RabbitMQ)
+      - "15672:15672"  # Порт для веб-интерфейса управления
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: password
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - local_network
+
+volumes:
+  rabbitmq_data:
+
+networks:
+  local_network:
+    external: true

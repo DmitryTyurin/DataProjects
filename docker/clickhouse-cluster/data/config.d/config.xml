@@ -1,0 +1,80 @@
+<yandex>
+    <path>/var/lib/clickhouse/</path>
+    <tmp_path>/var/lib/clickhouse/tmp/</tmp_path>
+    <user_files_path>/var/lib/clickhouse/user_files/</user_files_path>
+    <format_schema_path>/var/lib/clickhouse/format_schemas/</format_schema_path>
+
+    <logger>
+        <log>/var/log/clickhouse-server/clickhouse-server.log</log>
+        <errorlog>/var/log/clickhouse-server/clickhouse-server.err.log</errorlog>
+        <level>trace</level>
+        <size>100M</size>
+        <count>10</count>
+    </logger>
+
+    <zookeeper>
+        <node>
+            <host>zookeeper-clickhouse</host>
+            <port>2181</port>
+        </node>
+    </zookeeper>
+
+    <remote_servers>
+        <cluster-local-network>
+            <shard>
+                <internal_replication>true</internal_replication>
+                <replica>
+                    <host>clickhouse-node1</host>
+                    <port>9000</port>
+                    <user>default</user>
+                    <password></password>
+                    <secure>false</secure>
+                    <shard>1</shard>
+                    <replica>replica_1</replica>
+                </replica>
+                <replica>
+                    <host>clickhouse-node2</host>
+                    <port>9000</port>
+                    <user>default</user>
+                    <password></password>
+                    <secure>false</secure>
+                    <shard>1</shard>
+                    <replica>replica_2</replica>
+                </replica>
+            </shard>
+            <shard>
+                <internal_replication>true</internal_replication>
+                <replica>
+                    <host>clickhouse-node3</host>
+                    <port>9000</port>
+                    <user>default</user>
+                    <password></password>
+                    <secure>false</secure>
+                    <shard>2</shard>
+                    <replica>replica_1</replica>
+                </replica>
+                <replica>
+                    <host>clickhouse-node4</host>
+                    <port>9000</port>
+                    <user>default</user>
+                    <password></password>
+                    <secure>false</secure>
+                    <shard>2</shard>
+                    <replica>replica_2</replica>
+                </replica>
+            </shard>
+        </cluster-local-network>
+    </remote_servers>
+
+    <macros replace="1">
+        <shard from_env="CLICKHOUSE_SHARD" />
+        <replica from_env="CLICKHOUSE_REPLICA" />
+    </macros>
+
+    <networks>
+        <ip>::/0</ip>
+    </networks>
+
+    <listen_host>0.0.0.0</listen_host>
+    <listen_try>1</listen_try>
+</yandex>

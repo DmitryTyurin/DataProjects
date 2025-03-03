@@ -1,0 +1,14 @@
+<functions>
+    <function>
+        <type>executable</type>
+        <name>ParseXml</name>
+        <return_type>String</return_type>
+        <return_name>result</return_name>
+        <argument>
+            <name>value</name>
+            <type>String</type>
+        </argument>
+        <format>JSONEachRow</format>
+        <command>ParseXml.py</command>
+    </function>
+</functions>

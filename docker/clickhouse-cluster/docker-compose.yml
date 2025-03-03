@@ -1,0 +1,98 @@
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.3.0
+    container_name: zookeeper-clickhouse
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    networks:
+      - local_network
+
+  clickhouse-node1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: clickhouse-node1
+    volumes:
+      - ./data/config.d:/etc/clickhouse-server/config.d
+      - ./data/functions_py/ParseXml.py.py:/var/lib/clickhouse/user_scripts/ParseXml.py.py
+      - ./data/functions_xml/ParseXml_function.xml:/etc/clickhouse-server/ParseXml_function.xml
+    ports:
+      - "9000:9000"
+      - "8123:8123"
+    environment:
+      - CLICKHOUSE_ZOOKEEPER_CONNECT_STRING=zookeeper:2181
+      - CLICKHOUSE_SHARD=1
+      - CLICKHOUSE_REPLICA=replica_1
+    depends_on:
+      - zookeeper
+    networks:
+      - local_network
+
+  clickhouse-node2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: clickhouse-node2
+    volumes:
+      - ./data/config.d:/etc/clickhouse-server/config.d
+      - ./data/functions_py/ParseXml.py.py:/var/lib/clickhouse/user_scripts/ParseXml.py.py
+      - ./data/functions_xml/ParseXml_function.xml:/etc/clickhouse-server/ParseXml_function.xml
+    ports:
+      - "9001:9000"
+      - "8124:8123"
+    environment:
+      - CLICKHOUSE_ZOOKEEPER_CONNECT_STRING=zookeeper:2181
+      - CLICKHOUSE_SHARD=1
+      - CLICKHOUSE_REPLICA=replica_2
+    depends_on:
+      - zookeeper
+    networks:
+      - local_network
+
+  clickhouse-node3:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: clickhouse-node3
+    volumes:
+      - ./data/config.d:/etc/clickhouse-server/config.d
+      - ./data/functions_py/ParseXml.py.py:/var/lib/clickhouse/user_scripts/ParseXml.py.py
+      - ./data/functions_xml/ParseXml_function.xml:/etc/clickhouse-server/ParseXml_function.xml
+    ports:
+      - "9002:9000"
+      - "8125:8123"
+    environment:
+      - CLICKHOUSE_ZOOKEEPER_CONNECT_STRING=zookeeper:2181
+      - CLICKHOUSE_SHARD=2
+      - CLICKHOUSE_REPLICA=replica_1
+    depends_on:
+      - zookeeper
+    networks:
+      - local_network
+
+  clickhouse-node4:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: clickhouse-node4
+    volumes:
+      - ./data/config.d:/etc/clickhouse-server/config.d
+      - ./data/functions_py/ParseXml.py.py:/var/lib/clickhouse/user_scripts/ParseXml.py.py
+      - ./data/functions_xml/ParseXml_function.xml:/etc/clickhouse-server/ParseXml_function.xml
+    ports:
+      - "9003:9000"
+      - "8126:8123"
+    environment:
+      - CLICKHOUSE_ZOOKEEPER_CONNECT_STRING=zookeeper:2181
+      - CLICKHOUSE_SHARD=2
+      - CLICKHOUSE_REPLICA=replica_2
+    depends_on:
+      - zookeeper
+    networks:
+      - local_network
+
+networks:
+  local_network:
+    external: true
