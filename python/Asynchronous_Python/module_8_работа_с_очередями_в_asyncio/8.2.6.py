@@ -51,7 +51,6 @@ async def main():
             tg.create_task(consumer(queue))
 
         await queue.join()
-        consumer_task.cancel()
 
     except* Exception as e:
         [print(error) for error in e.exceptions]
