@@ -33,7 +33,7 @@ async def process_files(csv_files, semaphore):
     return sum(numbers)
 
 
-# Основная функция
+
 async def main():
     directory = "5000folder"
     semaphore = asyncio.Semaphore(100)
