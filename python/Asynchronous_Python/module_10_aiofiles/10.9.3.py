@@ -9,7 +9,7 @@ import csv
 
 
 async def read_csv(file_path):
-    async with aiofiles.open(file_path, mode='r') as file:
+    async with aiofiles.open(file_path, mode="r") as file:
         content = await file.read()
         reader = csv.reader(content.splitlines())
         first_row = next(reader)
