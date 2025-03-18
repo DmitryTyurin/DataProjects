@@ -11,11 +11,6 @@ import aiocsv
 
 
 async def convert_csv_to_json(csv_filename, json_filename):
-    """
-    Асинхронная функция для преобразования данных из CSV в JSON.
-    :param csv_filename: путь до CSV-файла
-    :param json_filename: путь до JSON-файла
-    """
     try:
         async with aiofiles.open(
             csv_filename, mode="r", encoding="utf-8-sig"
