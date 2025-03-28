@@ -21,7 +21,10 @@ CORRECT_PASSWORD = "secret"
 
 def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
     # Проверяем учетные данные
-    if credentials.username != CORRECT_USERNAME or credentials.password != CORRECT_PASSWORD:
+    if (
+        credentials.username != CORRECT_USERNAME
+        or credentials.password != CORRECT_PASSWORD
+    ):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect username or password",
@@ -69,6 +72,8 @@ async def login_auth(request: Request):
             headers={"WWW-Authenticate": "Basic"},
         )
 
+
 if __name__ == "__main__":
     import uvicorn
+
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)

@@ -43,7 +43,9 @@ app = FastAPI()
 security = HTTPBearer()
 
 # Конфигурация JWT
-SECRET_KEY = "your-secret-key-please-change-it"  # В продакшене используйте надежный секрет
+SECRET_KEY = (
+    "your-secret-key-please-change-it"  # В продакшене используйте надежный секрет
+)
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
@@ -76,7 +78,9 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
 
 
 # Зависимость для проверки JWT токена
-async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
+async def get_current_user(
+    credentials: HTTPAuthorizationCredentials = Depends(security),
+):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -116,7 +120,7 @@ async def login(login_data: LoginRequest):
 async def protected_resource(current_user: str = Depends(get_current_user)):
     return {
         "message": f"Hello, {current_user}! You've accessed the protected resource.",
-        "status": "success"
+        "status": "success",
     }
 
 
@@ -132,4 +136,5 @@ async def invalid_token_exception_handler(request, exc):
 
 if __name__ == "__main__":
     import uvicorn
+
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
