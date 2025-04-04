@@ -15,4 +15,5 @@
     docker network ls
 
 #### Результат на скрине. Можно использовать контейнеры.
-![img.png](other/img.png)
+
+![img.png](assets/img.png)
