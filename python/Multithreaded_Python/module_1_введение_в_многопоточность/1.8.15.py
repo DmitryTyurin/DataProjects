@@ -31,9 +31,21 @@ import time
 
 # Список кодовых имен агентов
 code_names = [
-    "Alpha", "Bravo", "Charlie", "Delta", "Echo",
-    "Foxtrot", "Golf", "Hotel", "India", "Juliet",
-    "Kilo", "Lima", "Mike", "November", "Oscar"
+    "Alpha",
+    "Bravo",
+    "Charlie",
+    "Delta",
+    "Echo",
+    "Foxtrot",
+    "Golf",
+    "Hotel",
+    "India",
+    "Juliet",
+    "Kilo",
+    "Lima",
+    "Mike",
+    "November",
+    "Oscar",
 ]
 
 
@@ -58,10 +70,7 @@ def main():
 
         thread.start()
 
-    [
-        tread.join()
-        for tread in threads
-    ]
+    [tread.join() for tread in threads]
 
 
 main()
