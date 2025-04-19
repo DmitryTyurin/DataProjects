@@ -282,9 +282,13 @@ class StudentStorage:
         self.local_data.info = info
 
         for key, value in info.items():
-            if value is not None and (key == "Время обработки" or self.local_data.sleep_time > 0):
+            if value is not None and (
+                key == "Время обработки" or self.local_data.sleep_time > 0
+            ):
                 time.sleep(self.local_data.sleep_time)
-                self.results.append(f"Имя потока - {threading.current_thread().name}, локальные данные потока - {key}: {value}")
+                self.results.append(
+                    f"Имя потока - {threading.current_thread().name}, локальные данные потока - {key}: {value}"
+                )
 
     def run_treads(self):
         for stud_name, stud_info in self.students_info.items():
