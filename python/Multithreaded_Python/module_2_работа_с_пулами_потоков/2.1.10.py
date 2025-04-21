@@ -27,7 +27,7 @@ class RangeSumCalculator:
 
     def calculate_sums(self):
         with ThreadPoolExecutor(max_workers=3) as executor:
-            sum1 = executor.submit(self.sum_range, self.sum1 )
+            sum1 = executor.submit(self.sum_range, self.sum1)
             sum2 = executor.submit(self.sum_range, self.sum2)
             sum3 = executor.submit(self.sum_range, self.sum3)
 
