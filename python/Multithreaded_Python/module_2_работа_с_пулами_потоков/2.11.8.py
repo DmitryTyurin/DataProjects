@@ -81,3 +81,4 @@ class NumberProcessor:
 
 processor = NumberProcessor()
 processor.run()
+
