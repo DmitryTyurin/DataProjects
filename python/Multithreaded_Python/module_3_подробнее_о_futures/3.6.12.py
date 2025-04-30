@@ -66,13 +66,14 @@ import threading
 import time
 
 devices = [
-    {"name": "Server1", "ip": "192.168.1.1", 'status': True},
-    {"name": "Router1", "ip": "192.168.1.2", 'status': True},
-    {"name": "Switch1", "ip": "192.168.1.3", 'status': False},
-    {"name": "Server10", "ip": "192.168.1.28", 'status': True},
-    {"name": "Router10", "ip": "192.168.1.29", 'status': False},
-    {"name": "Switch10", "ip": "192.168.1.30", 'status': True}
+    {"name": "Server1", "ip": "192.168.1.1", "status": True},
+    {"name": "Router1", "ip": "192.168.1.2", "status": True},
+    {"name": "Switch1", "ip": "192.168.1.3", "status": False},
+    {"name": "Server10", "ip": "192.168.1.28", "status": True},
+    {"name": "Router10", "ip": "192.168.1.29", "status": False},
+    {"name": "Switch10", "ip": "192.168.1.30", "status": True},
 ]
+
 
 class MonitoringDevice:
     def __init__(self, devices: list):
@@ -81,9 +82,9 @@ class MonitoringDevice:
 
     @staticmethod
     def monitor_device(device: dict):
-        name = device.get('name')
-        ip = device.get('ip')
-        status = device.get('status')
+        name = device.get("name")
+        ip = device.get("ip")
+        status = device.get("status")
 
         print(f"Мониторинг устройства: {name}, с IP {ip} статус: {status}")
         return name, ip, status
@@ -102,8 +103,7 @@ class MonitoringDevice:
     def run(self):
         with self.executor as executor:
             futures = [
-                executor.submit(self.monitor_device, device)
-                for device in self.devices
+                executor.submit(self.monitor_device, device) for device in self.devices
             ]
 
             for future in futures:
