@@ -12,7 +12,7 @@ import requests
 # Отправляем GET-запрос
 url = "https://parsinger.ru/selenium/6/6.3.1/index.html"
 response = requests.get(url)
-response.encoding = 'utf-8'
+response.encoding = "utf-8"
 
 # Выводим требуемые данные
 print("Status code:", response.status_code)
