@@ -11,7 +11,7 @@ try:
     response = requests.get(url, stream=True)
     response.raise_for_status()
 
-    file_size_bytes = int(response.headers.get('content-length', 0))
+    file_size_bytes = int(response.headers.get("content-length", 0))
     file_size_mb = round(file_size_bytes / (1024 * 1024), 2)
 
     print(file_size_mb)
