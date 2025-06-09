@@ -26,37 +26,17 @@ class DataSoup:
             print(f"Ошибка при запросе {self.url}: {e}")
             return None
 
-    def is_multiple_of_three(self, df):
-        for col in df.columns:
-            for val in df[col]:
-                num = int(val)
-                if num % 3 == 0:
-                    self.results.append(num)
-
-    def get_data(self, index):
-        import pandas as pd
-        from io import StringIO
-
-        data = self.get_html()
-        df = pd.read_html(StringIO(data))[index]
-
-        self.is_multiple_of_three(df)
-
-    def run_executor(self):
+    def get_data(self):
         with self.session:
             soup = BeautifulSoup(self.get_html(), "html.parser")
 
-            all_tables_list = [
-                item.get_text(strip=True) for item in soup.find_all(name="thead")
+            data = soup.find_all("td")
+
+            self.results = [
+                int(item.get_text(strip=True))
+                for item in data
+                if int(item.get_text(strip=True)) % 3 == 0
             ]
-
-            len_all_tables_list = len(all_tables_list)
-
-            with ThreadPoolExecutor(max_workers=len_all_tables_list) as executor:
-                futures = [
-                    executor.submit(self.get_data, index)
-                    for index in range(len_all_tables_list)
-                ]
 
     def sum(self):
         return sum(self.results)
@@ -68,7 +48,7 @@ def main():
     start_time = time.perf_counter()
 
     ds = DataSoup()
-    ds.run_executor()
+    ds.get_data()
     print(ds.sum())
 
     end_time = time.perf_counter()
