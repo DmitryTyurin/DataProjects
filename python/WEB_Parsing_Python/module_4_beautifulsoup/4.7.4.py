@@ -16,22 +16,24 @@ from concurrent.futures import ThreadPoolExecutor
 
 class DataSoup:
     def __init__(self):
+        self.session = requests.Session()
         self.base_url = "https://parsinger.ru/html/"
         self.pagen_url = "https://parsinger.ru/html/index3_page_1.html"
         self.pagen_list = self.get_pagen()
         self.total_results = []
         self.executor = ThreadPoolExecutor(max_workers=len(self.pagen_list))
+        self.futures = []
 
-    @staticmethod
-    def get_html(url):
-        response = requests.get(url)
-        response.encoding = "utf-8"
+    def get_html(self, url):
+        try:
+            response = self.session.get(url)
+            response.encoding = "utf-8"
+            response.raise_for_status()
 
-        response.raise_for_status()
-
-        if response.status_code == 200:
             return response.text
-        else:
+
+        except requests.RequestException as e:
+            print(f"Ошибка при запросе {url}: {e}")
             return None
 
     def get_pagen(self):
