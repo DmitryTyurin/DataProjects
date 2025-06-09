@@ -18,9 +18,9 @@ class DataSoup:
         self.url = "https://parsinger.ru/table/6/index.html"
         self.results = {}
 
-    def get_html(self):
+    def get_html(self, session):
         try:
-            response = self.session.get(self.url)
+            response = session.get(self.url)
             response.encoding = "utf-8"
             response.raise_for_status()
 
@@ -52,8 +52,9 @@ class DataSoup:
         import pandas as pd
         from io import StringIO
 
-        data = self.get_html()
-        df = pd.read_html(StringIO(data))[0]
+        with self.session as s:
+            data = self.get_html(s)
+            df = pd.read_html(StringIO(data))[0]
 
         filtered_df = self.filter_data(df)
         sorted_df = self.sort_data(filtered_df)
