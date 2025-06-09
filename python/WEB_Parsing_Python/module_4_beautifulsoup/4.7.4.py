@@ -19,10 +19,9 @@ class DataSoup:
         self.session = requests.Session()
         self.base_url = "https://parsinger.ru/html/"
         self.pagen_url = "https://parsinger.ru/html/index3_page_1.html"
-        self.pagen_list = self.get_pagen()
-        self.total_results = []
-        self.executor = ThreadPoolExecutor(max_workers=len(self.pagen_list))
+        self.executor = ThreadPoolExecutor(max_workers=4)
         self.futures = []
+        self.total_results = []
 
     def get_html(self, url):
         try:
@@ -57,8 +56,11 @@ class DataSoup:
         self.total_results.append(result)
 
     def run(self):
-        with self.executor as executor:
-            self.futures = [executor.map(self.get_data, self.pagen_list)]
+        with self.session:
+            pagen_list = self.get_pagen()
+
+            with self.executor as executor:
+                self.futures = [executor.map(self.get_data, pagen_list)]
 
         print(self.total_results)
 
