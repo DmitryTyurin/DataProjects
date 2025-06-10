@@ -84,8 +84,10 @@ class DataSoup:
 
     def run(self):
         with self.session:
-            for url in self.pagen_url_list:
-                self.get_data(url)
+            with self.get_data_executor as executor:
+                futures = [
+                    executor.submit(self.get_data, url) for url in self.pagen_url_list
+                ]
 
     def transform_data(self):
         for name, price, description in self.all_zipped_data:
