@@ -35,11 +35,7 @@ class DataDriver:
         source = driver.find_element(By.ID, "draggable")
         target = driver.find_element(By.ID, "target")
 
-        (
-            self.action
-            .drag_and_drop(source, target)
-            .perform()
-        )
+        (self.action.drag_and_drop(source, target).perform())
 
         result = driver.find_element(By.ID, "password").text
         result = result.split(":")[-1].strip()
