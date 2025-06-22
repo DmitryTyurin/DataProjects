@@ -1,0 +1,70 @@
+# Запуск: Откройте указанный веб-сайт с использованием Selenium.
+# Исследование: На странице размещено 100 кнопок. Отправьтесь в путешествие, кликая по каждой из них, чтобы понять, какая из них прячет желаемый код.
+# Взаимодействие с окнами alert: Окна необходимо закрывать через:
+# browser.switch_to.alert.accept()
+# Обнаружение: При активации правильной кнопки, секретный код появится в теге: <p id="result">Code</p>.
+# Финальный штрих: Скопируйте этот код и вставьте его в специальное поле для ответа на степик.
+
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+
+class DataDriver:
+    def __init__(self):
+        self.url = "https://parsinger.ru/selenium/5.8/1/index.html"
+        self.options = self.setup_options()
+        self.driver = webdriver.Chrome(options=self.options)
+        self.action = ActionChains(self.driver)
+
+    @staticmethod
+    def setup_options():
+        from selenium.webdriver.chrome.options import Options
+
+        options = Options()
+        # options.add_argument("--headless")  # Без графического интерфейса
+        # options.add_argument('--disable-gpu')  # Отключаем GPU
+        options.add_argument("--window-size=1920,1080")  # Устанавливаем размер окна
+
+        return options
+
+    def get_result(self, driver, url):
+        import time
+
+        driver.get(url)
+
+        buttons = driver.find_elements(By.CLASS_NAME, "buttons")
+        for button in buttons:
+            button.click()
+            driver.switch_to.alert.accept()
+            result = driver.find_element(By.ID, "result").text
+
+            if result:
+                break
+
+        return result
+
+    def run(self):
+        with self.driver as driver:
+            data = self.get_result(driver, self.url)
+
+            print(data)
+
+
+def main():
+    import time
+
+    start_time = time.perf_counter()
+
+    d = DataDriver()
+    d.run()
+
+    end_time = time.perf_counter()
+
+    print(f"Время выполнения: {end_time - start_time:.2f} секунд")
+
+
+main()
