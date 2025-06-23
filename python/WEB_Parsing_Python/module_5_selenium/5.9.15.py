@@ -18,8 +18,34 @@ class DataDriver:
         self.options = self.setup_options()
         self.driver = webdriver.Chrome(options=self.options)
         self.action = ActionChains(self.driver)
-        self.window_size_x = [616, 648, 680, 701, 730, 750, 805, 820, 855, 890, 955, 1000]
-        self.window_size_y = [300, 330, 340, 388, 400, 421, 474, 505, 557, 600, 653, 1000]
+        self.window_size_x = [
+            616,
+            648,
+            680,
+            701,
+            730,
+            750,
+            805,
+            820,
+            855,
+            890,
+            955,
+            1000,
+        ]
+        self.window_size_y = [
+            300,
+            330,
+            340,
+            388,
+            400,
+            421,
+            474,
+            505,
+            557,
+            600,
+            653,
+            1000,
+        ]
 
     @staticmethod
     def setup_options():
@@ -27,7 +53,7 @@ class DataDriver:
 
         options = Options()
         options.add_argument("--headless")  # Без графического интерфейса
-        options.add_argument('--disable-gpu')  # Отключаем GPU
+        options.add_argument("--disable-gpu")  # Отключаем GPU
         # options.add_argument("--window-size=1920,1080")  # Устанавливаем размер окна
 
         return options
