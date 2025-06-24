@@ -28,7 +28,7 @@ class DataDriver:
         if response.status_code == 200:
             return response.text
         else:
-            return None
+            return None  # or raise an exception
 
     def get_all_urls(self):
         html = self.get_html()
