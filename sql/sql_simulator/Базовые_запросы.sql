@@ -99,3 +99,85 @@ from couriers
 order by birth_year desc, courier_id asc
 
 
+-- Как и в предыдущем задании, снова выведите id всех курьеров и их годы рождения, только теперь к извлеченному году примените функцию COALESCE. Укажите параметры функции так, чтобы вместо NULL значений в результат попадало текстовое значение unknown. Названия полей оставьте прежними.
+-- Отсортируйте итоговую таблицу сначала по убыванию года рождения курьера, затем по возрастанию id курьера.
+-- Поля в результирующей таблице: courier_id, birth_year
+
+select
+    courier_id,
+    coalesce(null, cast(date_part('year', birth_date) as varchar), 'unknown') as birth_year
+from couriers
+order by birth_year desc, courier_id asc
+
+
+-- Давайте представим, что по какой-то необъяснимой причине мы вдруг решили в одночасье повысить цену всех товаров в таблице products на 5%.
+-- Выведите id и наименования всех товаров, их старую и новую цену. Колонку со старой ценой назовите old_price, а колонку с новой — new_price.
+-- Результат отсортируйте сначала по убыванию новой цены, затем по возрастанию id товара.
+-- Поля в результирующей таблице: product_id, name, old_price, new_price
+
+select
+    product_id,
+    name,
+    price           as old_price,
+    price * 1.05    as new_price
+from products
+order by
+    new_price desc,
+    product_id asc
+
+
+-- Вновь, как и в прошлом задании, повысьте цену всех товаров на 5%, только теперь к колонке с новой ценой примените функцию ROUND.
+-- Выведите id и наименования товаров, их старую цену, а также новую цену с округлением. Новую цену округлите до одного знака после запятой, но тип данных не меняйте.
+-- Результат отсортируйте сначала по убыванию новой цены, затем по возрастанию id товара.
+-- Поля в результирующей таблице: product_id, name, old_price, new_price
+
+select
+    product_id,
+    name,
+    price                   as old_price,
+    round(price * 1.05, 1)  as new_price
+from products
+order by
+    new_price desc,
+    product_id asc
+
+
+-- Повысьте цену на 5% только на те товары, цена которых превышает 100 рублей. Цену остальных товаров оставьте без изменений.
+-- Также не повышайте цену на икру, которая и так стоит 800 рублей. Выведите id и наименования всех товаров, их старую и новую цену. Цену округлять не нужно.
+-- Результат отсортируйте сначала по убыванию новой цены, затем по возрастанию id товара.
+-- Поля в результирующей таблице: product_id, name, old_price, new_price
+
+select
+    product_id,
+    name,
+    price                   as old_price,
+    case
+        when name = lower('икра') then price
+        when price > 100 then price * 1.05
+        else price
+    end                     as new_price
+from products
+order by
+    new_price desc,
+    product_id asc
+
+
+-- Вычислите НДС каждого товара в таблице products и рассчитайте цену без учёта НДС.
+-- Выведите всю информацию о товарах, включая сумму налога и цену без его учёта.
+-- Колонки с суммой налога и ценой без НДС назовите соответственно tax и price_before_tax.
+-- Округлите значения в этих колонках до двух знаков после запятой.
+-- Результат отсортируйте сначала по убыванию цены товара без учёта НДС, затем по возрастанию id товара.
+-- Поля в результирующей таблице: product_id, name, price, tax, price_before_tax
+
+select
+    product_id,
+    name,
+    price,
+    round(price * 0.2 / 1.2, 2)     as tax,
+    round(price / 1.2, 2)           as price_before_tax
+from products
+order by
+    price_before_tax desc,
+    product_id asc
+
+
